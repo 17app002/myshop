@@ -1,11 +1,10 @@
+package shop;
+
 import dbutil.DBUtil;
 
-
 public class MyShop {
-
     private String dbName = "myshop";
     public static DBUtil dbUtil;
-
     public LoginPage loginPage;
 
     public MyShop() {
@@ -14,7 +13,6 @@ public class MyShop {
             System.out.println("商店資料初始化成功....");
         }
     }
-
     public boolean login() {
         loginPage = new LoginPage();
         return loginPage.isLogin();
@@ -32,7 +30,6 @@ public class MyShop {
         System.out.println("登入成功!");
         dbUtil.release();
     }
-
 }
 
 

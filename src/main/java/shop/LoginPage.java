@@ -1,3 +1,5 @@
+package shop;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -5,7 +7,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LoginPage {
-
     private int role;
     private String userName;
     private String passWord;
@@ -16,17 +17,14 @@ public class LoginPage {
     public LoginPage() {
         init();
     }
-
     public void init() {
         count = 0;
         login = false;
         show();
     }
-
     public boolean isLogin() {
         return login;
     }
-
     /***
      * 登入介面
      */
@@ -104,11 +102,6 @@ public class LoginPage {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return false;
     }
-
 }
-
-
-
