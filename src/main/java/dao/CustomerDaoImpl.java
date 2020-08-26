@@ -19,7 +19,6 @@ public class CustomerDaoImpl implements CustomerDao{
             PreparedStatement pstmt=conn.prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setString(2,password);
-
             ResultSet result=pstmt.executeQuery();
 
             if(result.next()){
@@ -41,10 +40,14 @@ public class CustomerDaoImpl implements CustomerDao{
                 throwables.printStackTrace();
             }
         }
-
         return null;
     }
 
+    /***
+     * 註冊功能
+     * @param customer
+     * @return
+     */
     public boolean register(Customer customer) {
         String sql="insert into customers (name,password,phone,money) values(?,?,?,?)";
         Connection conn=JDBCUtil.getConnection("myshop");
@@ -73,7 +76,7 @@ public class CustomerDaoImpl implements CustomerDao{
         return true;
     }
 
-    public boolean checkCustomer(Customer customer) {
+    public boolean check(Customer customer) {
         String sql="select * from customers where phone=?";
         Connection conn=JDBCUtil.getConnection("myshop");
 
@@ -96,7 +99,6 @@ public class CustomerDaoImpl implements CustomerDao{
                 throwables.printStackTrace();
             }
         }
-
         return false;
     }
 }

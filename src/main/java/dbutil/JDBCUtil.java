@@ -5,7 +5,7 @@ import java.sql.*;
 public class JDBCUtil {
 
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://localhost:3306/mydemo";
+    private static String url = "jdbc:mysql://localhost:3306/myshop";
     private static String user = "root";
     private static String password = "password";
 
@@ -17,9 +17,24 @@ public class JDBCUtil {
         }
     }
 
+
+    public static Connection getConnection(String url,String user,String password,String dbName) {
+
+        url = "jdbc:mysql://"+url+":3306/" + dbName + "?characterEncoding=UTF-8&useSSL=false";
+
+
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public static Connection getConnection(String dbName) {
 
-        url = "jdbc:mysql://localhost:3306/" + dbName + "?characterEncoding=UTF-8";
+        url = "jdbc:mysql://localhost:3306/" + dbName + "?characterEncoding=UTF-8&useSSL=false";
+
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException throwables) {

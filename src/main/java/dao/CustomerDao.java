@@ -6,5 +6,5 @@ public interface CustomerDao {
 
     public boolean register(Customer customer);
 
-    public boolean checkCustomer(Customer customer);
+    public boolean check(Customer customer);
 }
