@@ -25,7 +25,9 @@ public class ItemPage {
     }
 
     public void layout() {
-        System.out.println("\t\t產品頁面");
+//        System.out.println("\n\t商店管理系統 v1.0");
+//        System.out.println("***>>  產品頁面************");
+
         int select = 0;
         ItemDaoImpl itemDao = new ItemDaoImpl();
         //取得目前品項
@@ -34,13 +36,14 @@ public class ItemPage {
         while (true) {
             int count = 0;
             Scanner scanner = new Scanner(System.in);
-            System.out.println("====================================================================");
-            System.out.println("編號\t\t商品名稱\t\t價格\t\t數量");
+            System.out.println("產品頁面===========================================");
+            System.out.println("編號\t\t商品名稱\t\t\t價格\t\t數量");
             for (Item item : items) {
                 count++;
                 System.out.println(count + "\t\t" + item.getName() + "\t\t" + item.getPrice() + "\t\t" + item.getQty());
             }
-            System.out.println(customer.getName() + "(" + customer.getMoney() + ")" + "請問要購買哪個品項呢(-1:離開)?");
+            System.out.println("==================================================");
+            System.out.print(customer.getName() + "(餘額:" + customer.getMoney() + "元)" + "\n請問要購買哪個品項呢(-1:離開)?");
             try {
                 select = scanner.nextInt();
             } catch (InputMismatchException ex) {
