@@ -6,6 +6,7 @@ public class Customer {
     private String password;
     private String phone;
     private int money;
+    private int role;
 
     public Customer(){}
 
@@ -18,6 +19,10 @@ public class Customer {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRole() {
+        return role;
     }
 
     public String getPhone() {
@@ -56,12 +61,19 @@ public class Customer {
         return password;
     }
 
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", money=" + money +
+                ", role=" + role +
                 '}';
     }
 }

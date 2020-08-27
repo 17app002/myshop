@@ -18,9 +18,9 @@ public class ItemDaoImpl implements ItemDao {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, item.getQty() - 1);
             pstmt.setInt(2, item.getId());
-            if (pstmt.execute()) {
-                return true;
-            }
+            pstmt.execute();
+            return true;
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -35,7 +35,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean put(Item item) {
+    public boolean add(Item item) {
         Connection conn = JDBCUtil.getConnection("myshop");
         String sql = "insert into items (name,price,qty,create_date,info) values(?,?,?,?,?)";
 
@@ -53,7 +53,6 @@ public class ItemDaoImpl implements ItemDao {
             pstmt.setString(5, item.getInfo());
 
             pstmt.execute();
-            System.out.println("產品上架成功!");
             return true;
 
 
@@ -95,10 +94,12 @@ public class ItemDaoImpl implements ItemDao {
         return false;
     }
 
+
+
     @Override
     public List<Item> getAll() {
 
-        List<Item> items = new ArrayList<>();
+        List<Item> items = new ArrayList<Item>();
         String sql = "select * from items";
         Connection conn = JDBCUtil.getConnection("myshop");
         try {
@@ -119,25 +120,9 @@ public class ItemDaoImpl implements ItemDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return items;
     }
 
 
-    /**
-     * @param strDate
-     * @return
-     */
-    public Date strToDate(String strDate) {
-        String str = strDate;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date d = null;
-        try {
-            d = format.parse(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        java.sql.Date date = new java.sql.Date(d.getTime());
-        return date;
-    }
+
 }

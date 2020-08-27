@@ -1,6 +1,9 @@
+import dao.Customer;
+import dao.CustomerDaoImpl;
 import dao.Item;
 import dao.ItemDaoImpl;
 import dbutil.DBUtil;
+import dbutil.JDBCUtil;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
@@ -18,10 +21,33 @@ public class dbtest {
         }
     }
 
-
+    @Test
+    public void test1(){
+        CustomerDaoImpl customerDao = new CustomerDaoImpl();
+        //登入
+        Customer customer = customerDao.login("mandy", "mandy");
+        System.out.println(customer);
+        customer = new Customer("張三", "12345678", "0981765789", 8000);
+        //註冊
+        if (!customerDao.check(customer)) {
+            boolean success = customerDao.register(customer);
+            if (success) {
+                System.out.println("註冊成功!");
+            }
+        } else {
+            System.out.println("用戶已存在!");
+        }
+    }
 
     @Test
-    public void testItem(){
+    public void itemPageTest(){
+
+        Customer customer=new CustomerDaoImpl().login("mandy","mandy");
+        new ItemPage(customer);
+    }
+
+    @Test
+    public void ItemTest(){
         long millis=System.currentTimeMillis();
 
         java.sql.Date date=new java.sql.Date(millis);
@@ -31,10 +57,10 @@ public class dbtest {
         if(itemDao.check(item)){
             System.out.println("已有重複產品");
         }else{
-            itemDao.put(item);
+            itemDao.add(item);
         }
 
-        System.out.println(new ItemDaoImpl().strToDate("2015-05-06"));
+        System.out.println(JDBCUtil.strToDate("2015-05-06"));
         System.out.println(item);
 
 

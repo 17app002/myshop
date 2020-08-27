@@ -7,4 +7,8 @@ public interface CustomerDao {
     public boolean register(Customer customer);
 
     public boolean check(Customer customer);
+
+    public boolean update(Customer customer);
+
+
 }

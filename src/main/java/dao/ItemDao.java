@@ -7,7 +7,7 @@ public interface ItemDao {
     public boolean update(Item item);
 
     //上架(需檢查是否有相同商品)
-    public boolean put(Item item);
+    public boolean add(Item item);
 
     //檢查商品(是否存在)
     public boolean check(Item item);

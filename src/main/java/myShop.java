@@ -1,30 +1,25 @@
-import dao.Customer;
-import dao.CustomerDaoImpl;
-import dbutil.JDBCUtil;
-
-import java.sql.Connection;
+import java.util.Scanner;
 
 public class myShop {
 
     public static void main(String[] args) {
-        new CustomerPage();
-        //test();
-    }
 
-    public static void test() {
-        CustomerDaoImpl customerDao = new CustomerDaoImpl();
-        //登入
-        Customer customer = customerDao.login("mandy", "mandy");
-        System.out.println(customer);
-        customer = new Customer("張三", "12345678", "0981765789", 8000);
-        //註冊
-        if (!customerDao.check(customer)) {
-            boolean success = customerDao.register(customer);
-            if (success) {
-                System.out.println("註冊成功!");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("商店管理系統 v1.0");
+            System.out.println("[1]admin [2]顧客  [3]離開");
+
+            int select = scanner.nextInt();
+            if(select==1){
+                new AdminPage();
             }
-        } else {
-            System.out.println("用戶已存在!");
+            else if (select == 2) {
+                new CustomerPage();
+            } else {
+                break;
+            }
         }
     }
 }
+
+

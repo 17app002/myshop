@@ -28,6 +28,7 @@ public class CustomerDaoImpl implements CustomerDao {
                 customer.setPassword(result.getString("password"));
                 customer.setPassword(result.getString("phone"));
                 customer.setMoney(result.getInt("money"));
+                customer.setRole(result.getInt("role"));
                 return customer;
             }
 
@@ -87,6 +88,31 @@ public class CustomerDaoImpl implements CustomerDao {
             if (result.next()) {
                 return true;
             }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(Customer customer) {
+
+        Connection conn = JDBCUtil.getConnection("myshop");
+        String sql = "update customers set money=? where id=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, customer.getMoney() - 1);
+            pstmt.setInt(2, customer.getId());
+            pstmt.execute();
+            return true;
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();

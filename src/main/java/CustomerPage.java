@@ -47,7 +47,7 @@ public class CustomerPage {
                 if (customer != null) {
                     System.out.println("登入成功!");
                     System.out.println("轉到商品介面.....");
-                    new ItemPage();
+                    new ItemPage(customer);
                     return;
                 }
                 System.out.println("登入失敗...");
@@ -59,7 +59,7 @@ public class CustomerPage {
                     if (success) {
                         System.out.println("註冊成功!");
                         System.out.println("轉到商品介面.....");
-                        new ItemPage();
+                        new ItemPage(customer);
                         return;
                     }
                 }
