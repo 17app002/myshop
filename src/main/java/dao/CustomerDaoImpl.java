@@ -10,19 +10,19 @@ import dbutil.JDBCUtil;
 /***
  * 顧客類別
  */
-public class CustomerDaoImpl implements CustomerDao{
+public class CustomerDaoImpl implements CustomerDao {
     public Customer login(String name, String password) {
-        String sql="select * from customers where name=? and password=?";
-        Connection conn=JDBCUtil.getConnection("myshop");
+        String sql = "select * from customers where name=? and password=?";
+        Connection conn = JDBCUtil.getConnection("myshop");
 
         try {
-            PreparedStatement pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1,name);
-            pstmt.setString(2,password);
-            ResultSet result=pstmt.executeQuery();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, password);
+            ResultSet result = pstmt.executeQuery();
 
-            if(result.next()){
-                Customer customer=new Customer();
+            if (result.next()) {
+                Customer customer = new Customer();
                 customer.setId(result.getInt("id"));
                 customer.setName(result.getString("name"));
                 customer.setPassword(result.getString("password"));
@@ -33,7 +33,7 @@ public class CustomerDaoImpl implements CustomerDao{
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -49,8 +49,8 @@ public class CustomerDaoImpl implements CustomerDao{
      * @return
      */
     public boolean register(Customer customer) {
-        String sql="insert into customers (name,password,phone,money) values(?,?,?,?)";
-        Connection conn=JDBCUtil.getConnection("myshop");
+        String sql = "insert into customers (name,password,phone,money) values(?,?,?,?)";
+        Connection conn = JDBCUtil.getConnection("myshop");
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -62,10 +62,9 @@ public class CustomerDaoImpl implements CustomerDao{
             pstmt.execute();
 
 
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -77,22 +76,21 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     public boolean check(Customer customer) {
-        String sql="select * from customers where phone=?";
-        Connection conn=JDBCUtil.getConnection("myshop");
+        String sql = "select * from customers where phone=?";
+        Connection conn = JDBCUtil.getConnection("myshop");
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, customer.getPhone());
-            ResultSet result=pstmt.executeQuery();
+            ResultSet result = pstmt.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
                 return true;
             }
 
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
