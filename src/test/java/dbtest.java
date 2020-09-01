@@ -40,6 +40,12 @@ public class dbtest {
     }
 
     @Test
+    public void showItems(){
+        Customer customer=new CustomerDaoImpl().login("mandy","mandy");
+        new ItemPage(customer);
+    }
+
+    @Test
     public void itemPageTest(){
 
         Customer customer=new CustomerDaoImpl().login("mandy","mandy");
@@ -65,7 +71,7 @@ public class dbtest {
 
 
         //更新產品
-        List<Item> items=itemDao.getAll();
+        List<Item> items=itemDao.findAll();
         System.out.println(items.get(0));
         itemDao.update(items.get(0));
         for(Item i:items){

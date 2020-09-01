@@ -53,37 +53,6 @@ public class JDBCUtil {
         return null;
     }
 
-    public static void release(Connection conn, Statement st, ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                rs = null;
-            }
-        }
-        if (st != null) {
-            try {
-                st.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                st = null;
-            }
-        }
-
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                conn = null;
-            }
-        }
-    }
-
 
     /**
      * @param strDate

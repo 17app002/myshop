@@ -97,7 +97,7 @@ public class ItemDaoImpl implements ItemDao {
 
 
     @Override
-    public List<Item> getAll() {
+    public List<Item> findAll() {
 
         List<Item> items = new ArrayList<Item>();
         String sql = "select * from items";

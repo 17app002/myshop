@@ -1,7 +1,4 @@
-import dao.Customer;
-import dao.CustomerDaoImpl;
-import dao.Item;
-import dao.ItemDaoImpl;
+import dao.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -12,37 +9,33 @@ import java.util.Scanner;
  */
 public class ItemPage {
 
-    private Customer customer;
+    private Role role;
 
-    public ItemPage(Customer customer) {
-        this.customer = customer;
-        if(customer.getRole()==0){
-            layout();
-        }else {
-            System.out.println("管理者介面");
-            addItemLayout();
+    public ItemPage(Role role) {
+        this.role = role;
+
+        if (role instanceof Customer) {
+            customerLayout();
+        } else if (role instanceof Admin) {
+            adminLayout();
         }
     }
 
-    public void layout() {
-//        System.out.println("\n\t商店管理系統 v1.0");
-//        System.out.println("***>>  產品頁面************");
+    /**
+     * 商品介面
+     */
+    public void customerLayout() {
 
-        int select = 0;
-        ItemDaoImpl itemDao = new ItemDaoImpl();
-        //取得目前品項
-        List<Item> items = itemDao.getAll();
+        Customer customer = (Customer) role;
+        System.out.println(customer);
 
         while (true) {
+            int select = 0;
             int count = 0;
             Scanner scanner = new Scanner(System.in);
-            System.out.println("產品頁面===========================================");
-            System.out.println("編號\t\t商品名稱\t\t\t價格\t\t數量");
-            for (Item item : items) {
-                count++;
-                System.out.println(count + "\t\t" + item.getName() + "\t\t" + item.getPrice() + "\t\t" + item.getQty());
-            }
-            System.out.println("==================================================");
+            List<Item> items = ItemPage.showItems();
+            System.out.println("[購買商品]===============================================");
+
             System.out.print(customer.getName() + "(餘額:" + customer.getMoney() + "元)" + "\n請問要購買哪個品項呢(-1:離開)?");
             try {
                 select = scanner.nextInt();
@@ -71,94 +64,87 @@ public class ItemPage {
             }
 
             //進行購買更新庫存動作
-            if (itemDao.update(item)) {
+            if (new ItemDaoImpl().update(item)) {
                 //增加到訂單頁面
                 new OrderPage(item);
                 System.out.println("商品訂購成功:" + item.getName());
-                //System.out.println("按任一鍵繼續........");
-                //String key=scanner.nextLine();
-
                 //更新顧客資料
                 int money = (int) ((float) customer.getMoney() - item.getPrice());
                 customer.setMoney(money);
+                //更新顧客資料
                 new CustomerDaoImpl().update(customer);
-
-                //更新商品列表
-                items = itemDao.getAll();
             }
         }
     }
 
 
-    public void showItem() {
+    /**
+     * 回傳產品
+     *
+     * @return
+     */
+    public static List<Item> showItems() {
         ItemDaoImpl itemDao = new ItemDaoImpl();
         //取得目前品項
-        List<Item> items = itemDao.getAll();
+        List<Item> items = itemDao.findAll();
         int count = 0;
-        System.out.println("====================================================================");
-        System.out.println("編號\t\t商品名稱\t\t價格\t\t數量");
+
+
+        System.out.println("[產品頁面]===============================================");
         for (Item item : items) {
             count++;
-            System.out.println(count + "\t\t" + item.getName() + "\t\t" + item.getPrice() + "\t\t" + item.getQty());
+            String itemInfo = String.format("%3d %s ==>價格:%.2f 產品數量:%d", count, item.getName(), item.getPrice(), item.getQty());
+            System.out.println(itemInfo);
         }
+        System.out.println("=========================================================");
+
+        return items;
     }
 
     /**
      * 增加商品畫面
      */
-    public void addItemLayout() {
+    public void adminLayout() {
+        Admin admin = (Admin) role;
+        System.out.println(admin);
 
-        showItem();
         while (true) {
-            Item item = getItem();
-            if (item == null) {
-                System.out.println("新增商品完畢..");
-                break;
+            ItemPage.showItems();
+
+            System.out.println("[新增商品]===============================================");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("商品名稱:(-1:exit)");
+            String name = scanner.nextLine();
+            if (name.equals("-1")) {
+                return;
             }
-            if (item.getName() == null) {
-                System.out.println("重新輸入資料");
+
+            Item item = null;
+            try {
+                System.out.println("商品價格:");
+                float price = scanner.nextFloat();
+                System.out.println("商品數量:");
+                int qty = scanner.nextInt();
+                System.out.println("商品備註:");
+                String info = scanner.next();
+                item = new Item(name, price, qty, null, info);
+
+            } catch (InputMismatchException ex) {
+                System.out.println("輸入資料錯誤，請重新輸入");
                 continue;
             }
 
-            ItemDaoImpl itemDao = new ItemDaoImpl();
+            ItemDao itemDao = new ItemDaoImpl();
 
             if (itemDao.check(item)) {
-                System.out.println("商品重複...");
+                System.out.println("商品重複，請重新輸入");
                 continue;
             }
 
             itemDao.add(item);
             System.out.println("商品新增成功!");
-            showItem();
         }
     }
 
 
-    public Item getItem() {
-        System.out.println("===============新增商品===============");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("商品名稱:(-1:exit)");
-        String name = scanner.nextLine();
-
-        if (name.equals("-1")) {
-            return null;
-        }
-
-        try {
-            System.out.println("商品價格:");
-            float price = scanner.nextFloat();
-            System.out.println("商品數量:");
-            int qty = scanner.nextInt();
-            System.out.println("商品備註:");
-            String info = scanner.next();
-
-            return new Item(name, price, qty, null, info);
-
-        } catch (InputMismatchException ex) {
-            System.out.println("輸入資料錯誤，請重新輸入");
-        }
-
-        //輸入有錯誤情況(回傳空的item)
-        return new Item();
-    }
 }

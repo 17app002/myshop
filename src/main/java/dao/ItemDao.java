@@ -13,5 +13,5 @@ public interface ItemDao {
     public boolean check(Item item);
 
     //取得目前商品
-    public List<Item> getAll();
+    public List<Item> findAll();
 }

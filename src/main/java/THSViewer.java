@@ -12,7 +12,13 @@ public class THSViewer {
 
         Connection connection= JDBCUtil.getConnection("db4free.net","iiiplay001","me516888","ths_data");
 
-        System.out.println(connection);
+
+        if(connection!=null){
+            System.out.println("連線成功，取得資料中...");
+        }else{
+            System.out.println("連線失敗!");
+            return;
+        }
 
         try {
             Statement statement=connection.createStatement();

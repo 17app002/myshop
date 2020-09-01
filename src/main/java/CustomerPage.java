@@ -15,16 +15,15 @@ public class CustomerPage {
 
     public void layout() {
         Scanner scanner = new Scanner(System.in);
-
         int select = 0;
         while (true) {
             try {
                 System.out.println("\n\t商店管理系統 v1.0");
-                System.out.println("***>>顧客登入介面************");
+                System.out.println("***>>顧客登入介面**************");
                 System.out.println("[1]登入");
                 System.out.println("[2]註冊");
                 System.out.println("[3]離開");
-                System.out.println("****************************");
+                System.out.println("*******************************");
 
                 select = scanner.nextInt();
             } catch (InputMismatchException ex) {
@@ -33,16 +32,19 @@ public class CustomerPage {
 
             if (select < 1 && select > 3) {
                 System.out.println("請重新輸入....");
-                return;
+                continue;
             } else if (select == 3) {
                 System.out.println("返回上一頁");
-                return;
+                break;
             }
-            System.out.println("============================");
+
+
+
+            System.out.println("===============================");
             System.out.println(select == 1 ? "登入" : "用戶註冊");
-            System.out.println("============================");
+            System.out.println("===============================");
             //輸入的用戶
-            Customer temp = getCustomer(select);
+            Customer temp = getInputCustomer(select);
             CustomerDaoImpl customerDao = new CustomerDaoImpl();
             //取得實際用戶
             Customer customer = null;
@@ -74,7 +76,7 @@ public class CustomerPage {
         }
     }
 
-    public Customer getCustomer(int select) {
+    public Customer getInputCustomer(int select) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("請輸入帳號:");
         String name = scanner.next();

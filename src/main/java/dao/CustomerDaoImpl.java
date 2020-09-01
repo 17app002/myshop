@@ -1,11 +1,11 @@
 package dao;
 
+import dbutil.JDBCUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import dbutil.JDBCUtil;
 
 /***
  * 顧客類別
@@ -26,9 +26,8 @@ public class CustomerDaoImpl implements CustomerDao {
                 customer.setId(result.getInt("id"));
                 customer.setName(result.getString("name"));
                 customer.setPassword(result.getString("password"));
-                customer.setPassword(result.getString("phone"));
+                customer.setPhone(result.getString("phone"));
                 customer.setMoney(result.getInt("money"));
-                customer.setRole(result.getInt("role"));
                 return customer;
             }
 
