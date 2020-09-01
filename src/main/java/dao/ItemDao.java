@@ -15,4 +15,7 @@ public interface ItemDao {
     //取得目前商品
     public List<Item> findAll();
 
+    //依照id取商品
+    public Item findById(int id);
+
 }

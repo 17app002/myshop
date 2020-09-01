@@ -30,6 +30,7 @@ public class AdminPage {
                 System.out.println("[2]註冊");
                 System.out.println("[3]離開");
                 System.out.println("*******************************");
+                System.out.print("請選擇功能:");
 
                 select = scanner.nextInt();
             } catch (InputMismatchException ex) {
@@ -93,7 +94,7 @@ public class AdminPage {
 
 
     /**
-     * 顯示所有顧客資訊
+     * 顯示所有管理員資訊
      */
     public static void findAllPage() {
 

@@ -2,18 +2,18 @@ import dao.Customer;
 import dao.CustomerDaoImpl;
 import dao.Item;
 import dao.ItemDaoImpl;
-import dbutil.DBUtil;
 import dbutil.JDBCUtil;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class dbtest {
 
     @Test
     public void test() {
-        DBUtil dbUtil = new DBUtil("myshop", "root", "password");
-        if (dbUtil.isConnection()) {
+        Connection conn = JDBCUtil.getConnection("myshop");
+        if (conn != null) {
             System.out.println("資料庫連結成功！");
         }
 
@@ -40,8 +40,11 @@ public class dbtest {
 
     @Test
     public void showItems() {
-        Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
-        new ItemPage(customer);
+        //Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
+        //new ItemPage(customer);
+
+
+        System.out.println(new ItemDaoImpl().findById(10));
     }
 
     @Test

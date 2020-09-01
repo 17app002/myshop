@@ -95,7 +95,6 @@ public class ItemDaoImpl implements ItemDao {
     }
 
 
-
     @Override
     public List<Item> findAll() {
 
@@ -105,17 +104,17 @@ public class ItemDaoImpl implements ItemDao {
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    float price = resultSet.getFloat("price");
-                    int qty = resultSet.getInt("qty");
-                    Date date = resultSet.getDate("create_date");
-                    String text = resultSet.getString("info");
-                    items.add(new Item(id, name, price, qty, date, text));
-                }
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                float price = resultSet.getFloat("price");
+                int qty = resultSet.getInt("qty");
+                Date date = resultSet.getDate("create_date");
+                String text = resultSet.getString("info");
+                items.add(new Item(id, name, price, qty, date, text));
             }
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -123,6 +122,32 @@ public class ItemDaoImpl implements ItemDao {
         return items;
     }
 
+    @Override
+    public Item findById(int id) {
+
+        String sql = "select * from items where id=?";
+        Connection conn = JDBCUtil.getConnection("myshop");
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet result = pstmt.executeQuery();
+            if (result.next()) {
+                String name = result.getString("name");
+                float price = result.getFloat("price");
+                int qty = result.getInt("qty");
+                Date date = result.getDate("create_date");
+                String text = result.getString("info");
+                return new Item(id, name, price, qty, date, text);
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 
 
 }
