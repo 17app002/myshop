@@ -2,16 +2,15 @@ package dao;
 
 import dbutil.JDBCUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /***
  * 顧客類別
  */
-public class CustomerDaoImpl implements CustomerDao {
-    public Customer login(String name, String password) {
+public class CustomerDaoImpl implements RoleDao {
+    public Role login(String name, String password) {
         String sql = "select * from customers where name=? and password=?";
         Connection conn = JDBCUtil.getConnection("myshop");
 
@@ -43,15 +42,16 @@ public class CustomerDaoImpl implements CustomerDao {
         return null;
     }
 
-    /***
-     * 註冊功能
-     * @param customer
+    /**
+     * 註冊
+     *
+     * @param role
      * @return
      */
-    public boolean register(Customer customer) {
+    public boolean register(Role role) {
+        Customer customer = (Customer) role;
         String sql = "insert into customers (name,password,phone,money) values(?,?,?,?)";
         Connection conn = JDBCUtil.getConnection("myshop");
-
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, customer.getName());
@@ -71,14 +71,13 @@ public class CustomerDaoImpl implements CustomerDao {
                 throwables.printStackTrace();
             }
         }
-
         return true;
     }
 
-    public boolean check(Customer customer) {
+    public boolean check(Role role) {
+        Customer customer = (Customer) role;
         String sql = "select * from customers where phone=?";
         Connection conn = JDBCUtil.getConnection("myshop");
-
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, customer.getPhone());
@@ -101,8 +100,8 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean update(Customer customer) {
-
+    public boolean update(Role role) {
+        Customer customer = (Customer) role;
         Connection conn = JDBCUtil.getConnection("myshop");
         String sql = "update customers set money=? where id=?";
         try {
@@ -123,5 +122,33 @@ public class CustomerDaoImpl implements CustomerDao {
             }
         }
         return false;
+    }
+
+
+    @Override
+    public List<Role> findAll() {
+
+        List<Role> roles = new ArrayList<Role>();
+        String sql = "select * from customers";
+        Connection conn = JDBCUtil.getConnection("myshop");
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    String password = resultSet.getString("password");
+                    String phone = resultSet.getString("phone");
+                    int money = resultSet.getInt("money");
+
+                    roles.add(new Customer(id, name, password, phone, money));
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return roles;
     }
 }

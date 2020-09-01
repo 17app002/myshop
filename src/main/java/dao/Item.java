@@ -16,7 +16,6 @@ public class Item {
     public Item() {
     }
 
-
     public Item(String name, float price, int qty, Date create_date, String info) {
         this.id = 0;
         this.name = name;

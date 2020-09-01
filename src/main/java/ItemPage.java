@@ -47,7 +47,7 @@ public class ItemPage {
                 System.out.println("離開商品頁面.");
                 break;
             }
-            if (select < 1 || select > count) {
+            if (select < 1 || select > items.size()) {
                 System.out.println("選項輸入錯誤，請重新輸入....");
                 continue;
             }

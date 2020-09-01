@@ -1,16 +1,22 @@
 package dao;
 
-public class Admin extends Role{
+public class Admin extends Role {
 
     private int level;
 
-    public Admin(){
+    public Admin() {
 
     }
 
-    public Admin(String name, String password) {
-        super(name,password);
-        level=0;
+    public Admin(String name, String password, int level) {
+        super(name, password);
+        this.level = level;
+    }
+
+    public Admin(int id, String name, String password, int level) {
+        super(name, password);
+        this.id = id;
+        this.level = level;
     }
 
     public int getLevel() {

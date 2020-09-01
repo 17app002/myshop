@@ -1,13 +1,21 @@
 package dao;
 
-public class Customer extends Role{
+public class Customer extends Role {
     private String phone;
     private int money;
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public Customer(String name, String password, String phone, int money) {
-        super(name,password);
+        super(name, password);
+        this.phone = phone;
+        this.money = money;
+    }
+
+    public Customer(int id, String name, String password, String phone, int money) {
+        super(name, password);
+        this.id = id;
         this.phone = phone;
         this.money = money;
     }

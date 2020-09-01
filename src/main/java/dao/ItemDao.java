@@ -14,4 +14,5 @@ public interface ItemDao {
 
     //取得目前商品
     public List<Item> findAll();
+
 }

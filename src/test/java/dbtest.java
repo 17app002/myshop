@@ -6,26 +6,25 @@ import dbutil.DBUtil;
 import dbutil.JDBCUtil;
 import org.junit.jupiter.api.Test;
 
-import java.text.SimpleDateFormat;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class dbtest {
 
     @Test
-    public void test(){
+    public void test() {
         DBUtil dbUtil = new DBUtil("myshop", "root", "password");
         if (dbUtil.isConnection()) {
             System.out.println("資料庫連結成功！");
         }
+
+        AdminPage.findAllPage();
     }
 
     @Test
-    public void test1(){
+    public void testCustomerLogin() {
         CustomerDaoImpl customerDao = new CustomerDaoImpl();
         //登入
-        Customer customer = customerDao.login("mandy", "mandy");
+        Customer customer = (Customer) customerDao.login("mandy", "mandy");
         System.out.println(customer);
         customer = new Customer("張三", "12345678", "0981765789", 8000);
         //註冊
@@ -40,29 +39,29 @@ public class dbtest {
     }
 
     @Test
-    public void showItems(){
-        Customer customer=new CustomerDaoImpl().login("mandy","mandy");
+    public void showItems() {
+        Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
         new ItemPage(customer);
     }
 
     @Test
-    public void itemPageTest(){
+    public void itemPageTest() {
 
-        Customer customer=new CustomerDaoImpl().login("mandy","mandy");
+        Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
         new ItemPage(customer);
     }
 
     @Test
-    public void ItemTest(){
-        long millis=System.currentTimeMillis();
+    public void ItemTest() {
+        long millis = System.currentTimeMillis();
 
-        java.sql.Date date=new java.sql.Date(millis);
-        Item item=new Item("iphone充電線",599,5,null,"紅色");
+        java.sql.Date date = new java.sql.Date(millis);
+        Item item = new Item("iphone充電線", 599, 5, null, "紅色");
 
-        ItemDaoImpl itemDao=new ItemDaoImpl();
-        if(itemDao.check(item)){
+        ItemDaoImpl itemDao = new ItemDaoImpl();
+        if (itemDao.check(item)) {
             System.out.println("已有重複產品");
-        }else{
+        } else {
             itemDao.add(item);
         }
 
@@ -71,10 +70,10 @@ public class dbtest {
 
 
         //更新產品
-        List<Item> items=itemDao.findAll();
+        List<Item> items = itemDao.findAll();
         System.out.println(items.get(0));
         itemDao.update(items.get(0));
-        for(Item i:items){
+        for (Item i : items) {
             System.out.println(i);
         }
 
