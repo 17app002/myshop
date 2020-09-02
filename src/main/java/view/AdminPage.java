@@ -1,6 +1,8 @@
-import dao.Admin;
-import dao.AdminDaoImpl;
-import dao.Role;
+package view;
+
+import entity.Admin;
+import dao.impl.AdminDaoImpl;
+import entity.Role;
 
 import java.util.InputMismatchException;
 import java.util.List;

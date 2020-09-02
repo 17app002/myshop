@@ -1,4 +1,4 @@
-import dbutil.JDBCUtil;
+import util.JDBCUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

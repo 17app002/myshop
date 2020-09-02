@@ -1,4 +1,4 @@
-package dao;
+package entity;
 
 public class Customer extends Role {
     private String phone;

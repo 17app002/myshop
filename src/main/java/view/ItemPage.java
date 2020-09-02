@@ -1,4 +1,12 @@
+package view;
+
 import dao.*;
+import dao.impl.CustomerDaoImpl;
+import dao.impl.ItemDaoImpl;
+import entity.Admin;
+import entity.Customer;
+import entity.Item;
+import entity.Role;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -96,7 +104,7 @@ public class ItemPage {
             String itemInfo = String.format("%3d %s ==>價格:%.2f 產品數量:%d", count, item.getName(), item.getPrice(), item.getQty());
             System.out.println(itemInfo);
         }
-        System.out.println("=========================================================");
+        System.out.println("========================================================");
 
         return items;
     }

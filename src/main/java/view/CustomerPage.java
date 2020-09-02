@@ -1,6 +1,7 @@
-import dao.Customer;
-import dao.CustomerDaoImpl;
-import dao.Role;
+package view;
+import entity.Customer;
+import dao.impl.CustomerDaoImpl;
+import entity.Role;
 
 import java.util.InputMismatchException;
 import java.util.List;

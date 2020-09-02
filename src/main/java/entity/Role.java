@@ -1,4 +1,4 @@
-package dao;
+package entity;
 
 public abstract class Role {
     protected int id;

@@ -1,6 +1,9 @@
-package dao;
+package dao.impl;
 
-import dbutil.JDBCUtil;
+import entity.Customer;
+import entity.Role;
+import dao.RoleDao;
+import util.JDBCUtil;
 
 import java.sql.*;
 import java.util.ArrayList;

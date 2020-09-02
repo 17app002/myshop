@@ -1,9 +1,10 @@
-package dao;
+package dao.impl;
 
-import dbutil.JDBCUtil;
+import entity.Item;
+import dao.ItemDao;
+import util.JDBCUtil;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ItemDaoImpl implements ItemDao {
         Connection conn = JDBCUtil.getConnection("myshop");
         String sql = "insert into items (name,price,qty,create_date,info) values(?,?,?,?,?)";
 
-        Date sqlDate = item.getCreate_date();
+        Date sqlDate = item.getCreateDate();
         if (sqlDate == null) {
             sqlDate = new Date(System.currentTimeMillis());
         }

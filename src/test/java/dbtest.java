@@ -1,9 +1,11 @@
-import dao.Customer;
-import dao.CustomerDaoImpl;
-import dao.Item;
-import dao.ItemDaoImpl;
-import dbutil.JDBCUtil;
+import entity.Customer;
+import dao.impl.CustomerDaoImpl;
+import entity.Item;
+import dao.impl.ItemDaoImpl;
+import util.JDBCUtil;
 import org.junit.jupiter.api.Test;
+import view.AdminPage;
+import view.ItemPage;
 
 import java.sql.Connection;
 import java.util.List;
