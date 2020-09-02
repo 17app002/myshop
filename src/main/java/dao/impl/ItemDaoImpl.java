@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemDaoImpl implements ItemDao {
+public class ItemDaoImpl implements ItemDao<Item> {
 
     @Override
     public boolean update(Item item) {
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
         String sql = "update items set qty=? where id=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, item.getQty() - 1);
+            pstmt.setInt(1, item.getQty());
             pstmt.setInt(2, item.getId());
             pstmt.execute();
             return true;
@@ -115,17 +115,20 @@ public class ItemDaoImpl implements ItemDao {
                 String text = resultSet.getString("info");
                 items.add(new Item(id, name, price, qty, date, text));
             }
-
-
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return items;
     }
 
     @Override
     public Item findById(int id) {
-
         String sql = "select * from items where id=?";
         Connection conn = JDBCUtil.getConnection("myshop");
 
@@ -140,11 +143,16 @@ public class ItemDaoImpl implements ItemDao {
                 Date date = result.getDate("create_date");
                 String text = result.getString("info");
                 return new Item(id, name, price, qty, date, text);
-
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
         return null;

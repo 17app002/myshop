@@ -129,4 +129,9 @@ public class AdminDaoImpl implements RoleDao {
         }
         return roles;
     }
+
+    @Override
+    public Role findById(int id) {
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 package dao.impl;
 
 import entity.Customer;
+import entity.Item;
 import entity.Role;
 import dao.RoleDao;
 import util.JDBCUtil;
@@ -153,5 +154,37 @@ public class CustomerDaoImpl implements RoleDao {
             ex.printStackTrace();
         }
         return roles;
+    }
+
+    @Override
+    public Role findById(int id) {
+        String sql = "select * from customers where id=?";
+        Connection conn = JDBCUtil.getConnection();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String phone = resultSet.getString("phone");
+                int money = resultSet.getInt("money");
+
+                return new Customer(id, name, password, phone, money);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        return null;
     }
 }

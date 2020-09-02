@@ -1,11 +1,15 @@
+import com.sun.deploy.panel.ITreeNode;
+import dao.impl.OrderDaoImpl;
 import entity.Customer;
 import dao.impl.CustomerDaoImpl;
 import entity.Item;
 import dao.impl.ItemDaoImpl;
+import entity.Order;
 import util.JDBCUtil;
 import org.junit.jupiter.api.Test;
 import view.AdminPage;
 import view.ItemPage;
+import view.OrderPage;
 
 import java.sql.Connection;
 import java.util.List;
@@ -14,12 +18,41 @@ public class dbtest {
 
     @Test
     public void test() {
-        Connection conn = JDBCUtil.getConnection("myshop");
-        if (conn != null) {
-            System.out.println("資料庫連結成功！");
+
+
+        //OrderPage.showAllOrders();
+//        System.out.println(new ItemDaoImpl().findById(1));
+//
+//        System.out.println(new OrderDaoImpl().add(new Order(JDBCUtil.strToDate("2020-08-31"),
+//                1,1,2)));
+
+//        Connection conn = JDBCUtil.getConnection("myshop");
+//        if (conn != null) {
+//            System.out.println("資料庫連結成功！");
+//        }
+//
+//        AdminPage.findAllPage();
+        Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
+        new OrderPage(customer).showCustomerOrders(customer);
+
+    }
+
+
+
+    @Test
+    public void testOrder(){
+
+        try {
+            System.out.println(new OrderDaoImpl().findByItemId(1));
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        AdminPage.findAllPage();
+        List<Order> orders=new OrderDaoImpl().findAll();
+        for(Order order:orders){
+            System.out.println(order);
+        }
+        //System.out.println(new OrderDaoImpl().findAll());
     }
 
     @Test

@@ -10,18 +10,28 @@ public class Order {
     private Date orderDate;
     private int itemId;
     private int customerId;
+    private int amount;
 
     public Order() {
     }
 
-    public Order(Date orderDate, int itemId, int customerId) {
+    public Order(Date orderDate, int itemId, int customerId, int amount) {
         this.orderDate = orderDate;
         this.itemId = itemId;
         this.customerId = customerId;
+        this.amount = amount;
     }
 
-    public Order(int id, Date orderDate, int itemId, int customerId) {
-        this(orderDate, itemId, customerId);
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Order(int id, Date orderDate, int itemId, int customerId, int amount) {
+        this(orderDate, itemId, customerId, amount);
         this.id = id;
     }
 

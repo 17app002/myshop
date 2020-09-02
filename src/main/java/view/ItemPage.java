@@ -61,23 +61,43 @@ public class ItemPage {
             }
             Item item = items.get(select - 1);
 
-            if (customer.getMoney() - item.getPrice() < 0) {
-                System.out.println("金額不夠");
-                continue;
-            }
-
             if (item.getQty() <= 0) {
                 System.out.println(item.getName() + " 商品已無庫存");
                 continue;
             }
 
+
+            System.out.print("請問要購買數量?");
+
+            int amount=0;
+            try {
+                amount=scanner.nextInt();
+            } catch (InputMismatchException ex) {
+                System.out.println("數量輸入錯誤，請重新輸入....");
+                continue;
+            }
+
+            if (amount>item.getQty() || amount<=0){
+                System.out.println("數量輸入錯誤，請重新輸入....");
+                continue;
+            }
+
+            float total=item.getPrice()*amount;
+
+            if (customer.getMoney() - total < 0) {
+                System.out.println("金額不夠");
+                continue;
+            }
+
+            item.setQty(item.getQty()-amount);
+
             //進行購買更新庫存動作
             if (new ItemDaoImpl().update(item)) {
                 //增加到訂單頁面
-                new OrderPage(item);
+                //new OrderPage(item);
                 System.out.println("商品訂購成功:" + item.getName());
                 //更新顧客資料
-                int money = (int) ((float) customer.getMoney() - item.getPrice());
+                int money = (int) (customer.getMoney() - total);
                 customer.setMoney(money);
                 //更新顧客資料
                 new CustomerDaoImpl().update(customer);
