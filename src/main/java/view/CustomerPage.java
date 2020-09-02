@@ -1,6 +1,7 @@
 package view;
-import entity.Customer;
+
 import dao.impl.CustomerDaoImpl;
+import entity.Customer;
 import entity.Role;
 
 import java.util.InputMismatchException;
@@ -92,6 +93,42 @@ public class CustomerPage {
     }
 
     /**
+     * 次級選單
+     */
+    public void subMenu(Role role) {
+        Scanner scanner = new Scanner(System.in);
+        String[] menu = {"[1]購買商品", "[2]檢視清單", "[3]離開"};
+        while (true) {
+            System.out.println("\n\t商店管理系統 v1.0");
+            System.out.println("***>>顧客選項介面**************");
+            for (String m : menu) {
+                System.out.println(m);
+            }
+            System.out.println("******************************");
+            int select = 0;
+            try {
+                select = scanner.nextInt();
+            } catch (InputMismatchException ex) {
+                System.out.println("請輸入正確數字");
+            }
+
+            //離開選單
+            if (select == menu.length) {
+                break;
+            }
+            if (select <= 0 || select > menu.length) {
+                System.out.println("請重新輸入....");
+                continue;
+            }
+            if(select==1){
+                new ItemPage(role);
+            }else if(select==2){
+                new OrderPage(role);
+            }
+        }
+    }
+
+    /**
      * 登入畫面
      *
      * @param role
@@ -100,32 +137,7 @@ public class CustomerPage {
         role = new CustomerDaoImpl().login(role.getName(), role.getPassword());
         if (role != null) {
             System.out.println("登入成功!");
-            Scanner scanner = new Scanner(System.in);
-            while (true) {
-                System.out.println("\n\t商店管理系統 v1.0");
-                System.out.println("***>>顧客選項介面**************");
-                System.out.println("[1]購買商品");
-                System.out.println("[2]檢視清單");
-                System.out.println("[3]離開");
-                System.out.println("******************************");
-                int select=0;
-                try {
-                    select = scanner.nextInt();
-                } catch (InputMismatchException ex) {
-                    System.out.println("請輸入正確數字");
-                }
-
-                if (select == EXIT) {
-                    break;
-                }
-                if (select < LOGIN || select > EXIT) {
-                    System.out.println("請重新輸入....");
-                    continue;
-                }
-
-            }
-            System.out.println("轉到商品介面.....");
-            new ItemPage(role);
+            subMenu(role);
             return;
         }
 

@@ -115,7 +115,7 @@ public class OrderDaoImpl implements OrderDao<Order> {
                 int id = resultSet.getInt("id");
                 Date date = resultSet.getDate("order_date");
                 int itemId = resultSet.getInt("item_id");
-                int customerId = resultSet.getInt("item_id");
+                int customerId = resultSet.getInt("customer_id");
                 int amount = resultSet.getInt("amount");
                 orders.add(new Order(id, date, itemId, customerId, amount));
             }

@@ -3,10 +3,8 @@ package view;
 import dao.*;
 import dao.impl.CustomerDaoImpl;
 import dao.impl.ItemDaoImpl;
-import entity.Admin;
-import entity.Customer;
-import entity.Item;
-import entity.Role;
+import dao.impl.OrderDaoImpl;
+import entity.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -89,19 +87,23 @@ public class ItemPage {
                 continue;
             }
 
+            //減去產品數量
             item.setQty(item.getQty()-amount);
 
             //進行購買更新庫存動作
             if (new ItemDaoImpl().update(item)) {
                 //增加到訂單頁面
-                //new OrderPage(item);
-                System.out.println("商品訂購成功:" + item.getName());
+                new OrderDaoImpl().add(new Order(null,item.getId(),customer.getId(),amount));
                 //更新顧客資料
-                int money = (int) (customer.getMoney() - total);
-                customer.setMoney(money);
+                customer.setMoney((int) (customer.getMoney() - total));
                 //更新顧客資料
                 new CustomerDaoImpl().update(customer);
+
+                System.out.println("商品訂購成功:" + item.getName());
+                return;
             }
+
+            System.out.println("購買商品失敗..");
         }
     }
 

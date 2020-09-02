@@ -32,7 +32,7 @@ public class dbtest {
 //        }
 //
 //        AdminPage.findAllPage();
-        Customer customer = (Customer) new CustomerDaoImpl().login("mandy", "mandy");
+        Customer customer = (Customer) new CustomerDaoImpl().login("jerry", "jerry");
         new OrderPage(customer).showCustomerOrders(customer);
 
     }

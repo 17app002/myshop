@@ -78,6 +78,43 @@ public class AdminPage {
     }
 
     /**
+     * 次級選單
+     */
+    public void subMenu(Role role) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] menu = {"[1]新增商品", "[2]檢視訂單", "[3]離開"};
+        while (true) {
+            System.out.println("\n\t商店管理系統 v1.0");
+            System.out.println("***>>管理員選項介面**************");
+            for (String m : menu) {
+                System.out.println(m);
+            }
+            System.out.println("*******************************");
+            int select = 0;
+            try {
+                select = scanner.nextInt();
+            } catch (InputMismatchException ex) {
+                System.out.println("請輸入正確數字");
+            }
+
+            //離開選單
+            if (select == menu.length) {
+                break;
+            }
+            if (select <= 0 || select > menu.length) {
+                System.out.println("請重新輸入....");
+                continue;
+            }
+            if(select==1){
+                new ItemPage(role);
+            }else if(select==2){
+                new OrderPage(role);
+            }
+        }
+    }
+
+    /**
      * 登入畫面
      *
      * @param role
@@ -86,8 +123,9 @@ public class AdminPage {
         role = new AdminDaoImpl().login(role.getName(), role.getPassword());
         if (role != null) {
             System.out.println("登入成功!");
-            System.out.println("轉到商品介面.....");
-            new ItemPage(role);
+            subMenu(role);
+//            System.out.println("轉到商品介面.....");
+//            new ItemPage(role);
             return;
         }
 
