@@ -100,6 +100,30 @@ public class CustomerPage {
         role = new CustomerDaoImpl().login(role.getName(), role.getPassword());
         if (role != null) {
             System.out.println("登入成功!");
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                System.out.println("\n\t商店管理系統 v1.0");
+                System.out.println("***>>顧客選項介面**************");
+                System.out.println("[1]購買商品");
+                System.out.println("[2]檢視清單");
+                System.out.println("[3]離開");
+                System.out.println("******************************");
+                int select=0;
+                try {
+                    select = scanner.nextInt();
+                } catch (InputMismatchException ex) {
+                    System.out.println("請輸入正確數字");
+                }
+
+                if (select == EXIT) {
+                    break;
+                }
+                if (select < LOGIN || select > EXIT) {
+                    System.out.println("請重新輸入....");
+                    continue;
+                }
+
+            }
             System.out.println("轉到商品介面.....");
             new ItemPage(role);
             return;
