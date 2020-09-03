@@ -1,22 +1,20 @@
 package dao;
 
 import entity.Role;
-
 import java.util.List;
 
 public interface RoleDao {
 
-    public Role login(String username, String password);
+    Role login(String username, String password);
 
-    public boolean register(Role role);
+    boolean register(Role role);
 
-    public boolean check(Role role);
+    boolean check(Role role);
 
-    public boolean update(Role role);
+    boolean update(Role role);
 
-    public List<Role> findAll();
+    List<Role> findAll();
 
-    public Role findById(int id);
-
+    Role findById(int id);
 
 }

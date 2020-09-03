@@ -47,7 +47,7 @@ public class OrderPage {
     }
 
     public Item findOrderByItem(int itemId) {
-        return (Item) new ItemDaoImpl().findById(itemId);
+        return new ItemDaoImpl().findById(itemId);
     }
 
 
@@ -63,7 +63,8 @@ public class OrderPage {
         }
 
         int count = 0;
-        System.out.printf("[%s 訂單頁面]=====================================================================================\n", customer.getName());
+        System.out.printf("[%s 訂單頁面]=====================================================================================\n",
+                customer.getName());
         System.out.println("NO.\t\t訂單編號\t\t訂購日期\t\t商品名稱\t\t訂購單價\t\t訂購數量\t\t訂單金額");
         System.out.println("----------------------------------------------------------------------------------------------------");
 

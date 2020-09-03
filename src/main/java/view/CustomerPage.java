@@ -148,7 +148,7 @@ public class CustomerPage {
     /**
      * 顯示所有顧客資訊
      */
-    public static void findAllPage() {
+    public static void findAll() {
 
         List<Role> customerList = new CustomerDaoImpl().findAll();
 
@@ -173,12 +173,10 @@ public class CustomerPage {
             boolean success = customerDao.register(role);
             if (success) {
                 System.out.println("註冊成功!");
-                System.out.println("轉到商品介面.....");
-                new ItemPage(role);
+                subMenu(role);
                 return;
             }
         }
         System.out.println("用戶已存在!");
     }
-
 }

@@ -22,17 +22,17 @@ public class Order {
         this.amount = amount;
     }
 
+    public Order(int id, Date orderDate, int itemId, int customerId, int amount) {
+        this(orderDate, itemId, customerId, amount);
+        this.id = id;
+    }
+
     public int getAmount() {
         return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public Order(int id, Date orderDate, int itemId, int customerId, int amount) {
-        this(orderDate, itemId, customerId, amount);
-        this.id = id;
     }
 
     public int getId() {

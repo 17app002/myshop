@@ -11,15 +11,13 @@ import java.util.List;
 import java.util.Scanner;
 
 /***
- * 顧客頁面
+ * 商店頁面
  */
 public class ItemPage {
-
     private Role role;
 
     public ItemPage(Role role) {
         this.role = role;
-
         if (role instanceof Customer) {
             customerLayout();
         } else if (role instanceof Admin) {
@@ -31,18 +29,16 @@ public class ItemPage {
      * 商品介面
      */
     public void customerLayout() {
-
         Customer customer = (Customer) role;
-        System.out.println(customer);
-
         while (true) {
             int select = 0;
             int count = 0;
             Scanner scanner = new Scanner(System.in);
-            List<Item> items = ItemPage.showItems();
+            List<Item> items = showItems();
             System.out.println("[購買商品]===============================================");
 
-            System.out.print(customer.getName() + "(餘額:" + customer.getMoney() + "元)" + "\n請問要購買哪個品項呢(-1:離開)?");
+            System.out.print(customer.getName() + "(餘額:" + customer.getMoney() + "元)" +
+                    "\n請問要購買哪個品項呢(-1:離開)?");
             try {
                 select = scanner.nextInt();
             } catch (InputMismatchException ex) {
@@ -64,23 +60,21 @@ public class ItemPage {
                 continue;
             }
 
-
             System.out.print("請問要購買數量?");
-
-            int amount=0;
+            int amount = 0;
             try {
-                amount=scanner.nextInt();
+                amount = scanner.nextInt();
             } catch (InputMismatchException ex) {
                 System.out.println("數量輸入錯誤，請重新輸入....");
                 continue;
             }
 
-            if (amount>item.getQty() || amount<=0){
+            if (amount > item.getQty() || amount <= 0) {
                 System.out.println("數量輸入錯誤，請重新輸入....");
                 continue;
             }
 
-            float total=item.getPrice()*amount;
+            float total = item.getPrice() * amount;
 
             if (customer.getMoney() - total < 0) {
                 System.out.println("金額不夠");
@@ -88,12 +82,13 @@ public class ItemPage {
             }
 
             //減去產品數量
-            item.setQty(item.getQty()-amount);
+            item.setQty(item.getQty() - amount);
 
             //進行購買更新庫存動作
             if (new ItemDaoImpl().update(item)) {
                 //增加到訂單頁面
-                new OrderDaoImpl().add(new Order(null,item.getId(),customer.getId(),amount));
+                new OrderDaoImpl().add(new Order(null, item.getId(),
+                        customer.getId(), amount));
                 //更新顧客資料
                 customer.setMoney((int) (customer.getMoney() - total));
                 //更新顧客資料
@@ -113,7 +108,7 @@ public class ItemPage {
      *
      * @return
      */
-    public static List<Item> showItems() {
+    public List<Item> showItems() {
         ItemDaoImpl itemDao = new ItemDaoImpl();
         //取得目前品項
         List<Item> items = itemDao.findAll();
@@ -123,7 +118,8 @@ public class ItemPage {
         System.out.println("[產品頁面]===============================================");
         for (Item item : items) {
             count++;
-            String itemInfo = String.format("%3d %s ==>價格:%.2f 產品數量:%d", count, item.getName(), item.getPrice(), item.getQty());
+            String itemInfo = String.format("%3d %s ==>價格:%.2f 產品數量:%d",
+                    count, item.getName(), item.getPrice(), item.getQty());
             System.out.println(itemInfo);
         }
         System.out.println("========================================================");
@@ -136,11 +132,8 @@ public class ItemPage {
      */
     public void adminLayout() {
         Admin admin = (Admin) role;
-        System.out.println(admin);
-
         while (true) {
-            ItemPage.showItems();
-
+            showItems();
             System.out.println("[新增商品]===============================================");
             Scanner scanner = new Scanner(System.in);
             System.out.println("商品名稱:(-1:exit)");

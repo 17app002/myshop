@@ -7,6 +7,10 @@ public class Customer extends Role {
     public Customer() {
     }
 
+    public Customer(String name,String password){
+        super(name,password);
+    }
+
     public Customer(String name, String password, String phone, int money) {
         super(name, password);
         this.phone = phone;

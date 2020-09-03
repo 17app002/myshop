@@ -37,7 +37,7 @@ public class ItemDaoImpl implements ItemDao<Item> {
 
     @Override
     public boolean add(Item item) {
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
         String sql = "insert into items (name,price,qty,create_date,info) values(?,?,?,?,?)";
 
         Date sqlDate = item.getCreateDate();
@@ -73,7 +73,7 @@ public class ItemDaoImpl implements ItemDao<Item> {
     @Override
     public boolean check(Item item) {
         String sql = "select * from items where name=?";
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class ItemDaoImpl implements ItemDao<Item> {
 
         List<Item> items = new ArrayList<Item>();
         String sql = "select * from items";
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -130,7 +130,7 @@ public class ItemDaoImpl implements ItemDao<Item> {
     @Override
     public Item findById(int id) {
         String sql = "select * from items where id=?";
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);

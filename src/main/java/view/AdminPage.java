@@ -124,8 +124,6 @@ public class AdminPage {
         if (role != null) {
             System.out.println("登入成功!");
             subMenu(role);
-//            System.out.println("轉到商品介面.....");
-//            new ItemPage(role);
             return;
         }
 
@@ -161,8 +159,7 @@ public class AdminPage {
             boolean success = adminDao.register(role);
             if (success) {
                 System.out.println("註冊成功!");
-                System.out.println("轉到商品介面.....");
-                new ItemPage(role);
+                subMenu(role);
                 return;
             }
         }

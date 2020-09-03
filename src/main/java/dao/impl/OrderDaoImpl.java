@@ -2,7 +2,6 @@ package dao.impl;
 
 
 import dao.OrderDao;
-import entity.Item;
 import entity.Order;
 import util.JDBCUtil;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao<Order> {
-
 
     @Override
     public List findByCustomerId(int customerId) throws Exception {
@@ -64,7 +62,8 @@ public class OrderDaoImpl implements OrderDao<Order> {
     @Override
     public boolean add(Object object) {
         Connection conn = JDBCUtil.getConnection();
-        String sql = "insert into orders (order_date,item_id,customer_id,amount) values(?,?,?,?)";
+        String sql = "insert into orders (order_date,item_id,customer_id,amount) " +
+                "values(?,?,?,?)";
 
         Order order=(Order) object;
         Date sqlDate = order.getOrderDate();
@@ -81,7 +80,6 @@ public class OrderDaoImpl implements OrderDao<Order> {
             pstmt.execute();
             return true;
 
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -91,7 +89,6 @@ public class OrderDaoImpl implements OrderDao<Order> {
                 throwables.printStackTrace();
             }
         }
-
         return false;
     }
 
@@ -145,7 +142,7 @@ public class OrderDaoImpl implements OrderDao<Order> {
             if (resultSet.next()) {
                 Date date = resultSet.getDate("order_date");
                 int itemId = resultSet.getInt("item_id");
-                int customerId = resultSet.getInt("item_id");
+                int customerId = resultSet.getInt("customer_id");
                 int amount = resultSet.getInt("amount");
                 return new Order(id, date, itemId, customerId, amount);
             }

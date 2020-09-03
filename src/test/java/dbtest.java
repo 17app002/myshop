@@ -8,17 +8,26 @@ import entity.Order;
 import util.JDBCUtil;
 import org.junit.jupiter.api.Test;
 import view.AdminPage;
+import view.CustomerPage;
 import view.ItemPage;
 import view.OrderPage;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class dbtest {
 
     @Test
     public void test() {
-
+        CustomerPage.findAll();
+//        String sql1="select * from customers where name=\'"+name+"\' and password=\'"+password+"\'";
+//        sql1=String.format("select * from customers where name='%s' and password='%s'",name,password);
+//        System.out.println(sql1);
+//
+//        Statement statement=conn.createStatement();
+//        ResultSet result=statement.executeQuery(sql1);
 
         //OrderPage.showAllOrders();
 //        System.out.println(new ItemDaoImpl().findById(1));
@@ -34,10 +43,7 @@ public class dbtest {
 //        AdminPage.findAllPage();
         Customer customer = (Customer) new CustomerDaoImpl().login("jerry", "jerry");
         new OrderPage(customer).showCustomerOrders(customer);
-
     }
-
-
 
     @Test
     public void testOrder(){

@@ -1,3 +1,5 @@
+package test;
+
 import util.JDBCUtil;
 
 import java.sql.Connection;

@@ -16,6 +16,13 @@ public class Item {
     public Item() {
     }
 
+    public Item(int id, String name, float price, int qty, Date createDate, String info) {
+        this(name, price, qty, createDate, info);
+        this.id = id;
+
+    }
+
+
     public Item(String name, float price, int qty, Date createDate, String info) {
         this.id = 0;
         this.name = name;
@@ -33,14 +40,6 @@ public class Item {
         this.createDate = createDate;
     }
 
-    public Item(int id, String name, float price, int qty, Date createDate, String info) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.qty = qty;
-        this.createDate = createDate;
-        this.info = info;
-    }
 
     public int getId() {
         return id;
@@ -73,7 +72,6 @@ public class Item {
     public void setQty(int qty) {
         this.qty = qty;
     }
-
 
 
     public String getInfo() {

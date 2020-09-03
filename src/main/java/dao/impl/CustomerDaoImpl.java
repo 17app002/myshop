@@ -15,14 +15,16 @@ import java.util.List;
  */
 public class CustomerDaoImpl implements RoleDao {
     public Role login(String name, String password) {
+
+        Connection conn = JDBCUtil.getConnection();
+
         String sql = "select * from customers where name=? and password=?";
-        Connection conn = JDBCUtil.getConnection("myshop");
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setString(2, password);
-            ResultSet result = pstmt.executeQuery();
+            PreparedStatement prepareStatement = conn.prepareStatement(sql);
+            prepareStatement.setString(1, name);
+            prepareStatement.setString(2, password);
+            ResultSet result = prepareStatement.executeQuery();
 
             if (result.next()) {
                 Customer customer = new Customer();
@@ -55,7 +57,7 @@ public class CustomerDaoImpl implements RoleDao {
     public boolean register(Role role) {
         Customer customer = (Customer) role;
         String sql = "insert into customers (name,password,phone,money) values(?,?,?,?)";
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, customer.getName());
@@ -81,7 +83,7 @@ public class CustomerDaoImpl implements RoleDao {
     public boolean check(Role role) {
         Customer customer = (Customer) role;
         String sql = "select * from customers where phone=?";
-        Connection conn = JDBCUtil.getConnection("myshop");
+        Connection conn = JDBCUtil.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, customer.getPhone());

@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 public class JDBCUtil {
 
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://localhost:3306/myshop";
+    private static String url = "jdbc:mysql://localhost:3306/myshop?characterEncoding=UTF-8&useSSL=false";
     private static String user = "root";
     private static String password = "password";
 
